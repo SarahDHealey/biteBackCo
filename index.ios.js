@@ -4,70 +4,63 @@
  * @flow
  */
 
+
+//instantiate navigator in the main component
+//create a function to render a scene (a component)
+//create page 1 component
+//create page 2 component
+//Register component page 2 in render scene component
+//create a function to switch component on press
+//error you must wrap the text components inside a main element
 import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  Dimensions,
+  Navigator,
 } from 'react-native';
 
 export default class biteBackCo extends Component {
   render() {
     return (
-      <ScrollView style={styles.scrollContainer}>
-        <View style={styles.container}>
-          <View style={styles.box}>
-            <Text>Box1</Text>
-          </View>
-          <View style={styles.box}>
-            <Text>Box2</Text>
-          </View>
-          <View style={styles.box}>
-            <Text>Box3</Text>
-          </View>
-          <View style={styles.box}>
-            <Text>Box4</Text>
-          </View>
-          <View style={styles.box}>
-            <Text>Box5</Text>
-          </View>
-          <View style={styles.box}>
-            <Text>Box6</Text>
-          </View>
-          <View style={styles.box}>
-            <Text>Box7</Text>
-          </View>
-          <View style={styles.box}>
-            <Text>Box8</Text>
-          </View>
-        </View>
-      </ScrollView>
-    )
+      <Navigator initialRoute = {{ id: 'Page2' }}
+      renderScene = {this.navigatorRenderScene} />
+    );
+  }
+  navigatorRenderScene(route, navigator) {
+    switch (route.id) {
+      case 'Page1':
+        return (<Page1 navigator = {navigator} />)
+      case 'Page2':
+        return (<Page2 navigator = {navigator} />)
+    }
+  }
+}
+
+class Page1 extends Component {
+  render() {
+    return (
+      <View>
+        <Text>-This is Page One-</Text>
+        <Text onPress={ () => this.props.navigator.push({ id: 'Page2'})}>-Go to Page Two-</Text>
+      </View>
+    );
+  }
+}
+class Page2 extends Component {
+  render() {
+    return (
+      <View>
+      <Text>-This is Page Two-</Text>
+      <Text onPress={ () => this.props.navigator.push({ id: 'Page1'})}>-Go to Page One-</Text>
+      </View>
+    );
   }
 }
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    padding: 2,
-  },
-  box: {
-    margin: 2,
-    width: Dimensions.get('window').width / 2 -6,
-    height: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f1c40f',
-    height: 200,
-  },
+
 });
 
 AppRegistry.registerComponent('biteBackCo', () => biteBackCo);
