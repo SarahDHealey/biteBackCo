@@ -19,48 +19,24 @@ import {
   Text,
   View,
   Navigator,
+  Button,
 } from 'react-native';
+
+import ViewContainer from './app/components/ViewContainer'
+import Home from './app/components/Home'
+import StatusBarBackground from './app/components/StatusBarBackground'
+
 
 export default class biteBackCo extends Component {
   render() {
     return (
-      <Navigator initialRoute = {{ id: 'Page2' }}
-      renderScene = {this.navigatorRenderScene} />
-    );
-  }
-  navigatorRenderScene(route, navigator) {
-    switch (route.id) {
-      case 'Page1':
-        return (<Page1 navigator = {navigator} />)
-      case 'Page2':
-        return (<Page2 navigator = {navigator} />)
-    }
+      <ViewContainer>
+        <StatusBarBackground />
+        <Text style={{backgroundColor: "gold"}}>{` BiteBackCo - Your resource for mosquito control`}</Text>
+        <Home />
+      </ViewContainer>
+    )
   }
 }
-
-class Page1 extends Component {
-  render() {
-    return (
-      <View>
-        <Text>-This is Page One-</Text>
-        <Text onPress={ () => this.props.navigator.push({ id: 'Page2'})}>-Go to Page Two-</Text>
-      </View>
-    );
-  }
-}
-class Page2 extends Component {
-  render() {
-    return (
-      <View>
-      <Text>-This is Page Two-</Text>
-      <Text onPress={ () => this.props.navigator.push({ id: 'Page1'})}>-Go to Page One-</Text>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-
-});
 
 AppRegistry.registerComponent('biteBackCo', () => biteBackCo);
